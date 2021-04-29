@@ -1,0 +1,98 @@
+model_config:
+  vilbert:
+    training_head_type: classification
+    num_labels: 2
+    losses:
+    - type: cross_entropy
+ 
+    
+    
+
+dataset_config:
+  csi:
+    fast_read: false
+    data_dir: ${env.data_dir}
+    data_folder: /data/csi_videos/
+    use_images: false
+    use_features: true
+    features:
+      train:
+      #- features/features_6frames.lmdb
+      - csi/features_s1e20_av.lmdb
+      val:
+      #- features/features_6frames.lmdb
+      - csi/features_s1e20_av.lmdb
+      test:
+      #- features/features_6frames.lmdb
+      - csi/features_s1e20_av.lmdb
+    annotations:
+      train:
+      #- text/train_dialogue_gt.csv
+      - csi/dialogue.csv
+      val:
+      #- text/val_dialogue_gt.csv
+       - csi/dialogue.csv
+      test:
+      #- text/test_dialogue_gt.csv
+       - csi/dialogue.csv
+      
+
+    return_features_info: true
+    processors:
+      text_processor:
+        type: bert_tokenizer
+        params:
+          tokenizer_config:
+            type: bert-base-uncased
+            params:
+              do_lower_case: true
+          mask_probability: 0
+          max_seq_length: 128
+      transformer_bbox_processor:
+        type: transformer_bbox
+        params:
+          bbox_key: boxes
+          image_width_key: image_w
+          image_height_key: image_h
+          
+      #answer_processor:
+        #type: multi_class_from_file
+        #params:
+            #num_answers: 1
+            #vocab_file: datasets/mmimdb/defaults/extras/classes_mm_imdb.txt
+            #preprocessor:
+                #type: simple_word
+                #params: {}
+        #type: prediction.argmax
+          
+
+
+optimizer:
+  type: adam_w
+  params:
+    lr: 5e-5
+    eps: 1e-8
+
+scheduler:
+  type: warmup_linear
+  params:
+    num_warmup_steps: 6
+    num_training_steps: 6
+
+evaluation:
+  metrics:
+  - f1
+
+training:
+  batch_size: 4
+  lr_scheduler: false
+  # Don't forget to update schedule_attributes if you update this
+  max_updates: 6
+  find_unused_parameters: true
+  #early_stop:
+    #criteria: vqa2/vqa_accuracy
+    #minimize: false
+
+checkpoint:
+  pretrained_state_mapping:
+    model.bert: model.bert
