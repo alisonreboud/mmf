@@ -19,15 +19,18 @@ class FeaturesDatabase(ImageDatabase):
         super().__init__(config, path, annotation_db, *args, **kwargs)
         self.feature_readers = []
         self.feature_dict = {}
+        #print(config.feature_path)
         self.feature_key = config.get("feature_key", "feature_path")
         self.feature_key = feature_key if feature_key else self.feature_key
         self._fast_read = config.get("fast_read", False)
+
 
         path = path.split(",")
 
         for image_feature_dir in path:
             feature_reader = FeatureReader(
                 base_path=get_absolute_path(image_feature_dir),
+                #base_path=image_feature_dir,
                 depth_first=config.get("depth_first", False),
                 max_features=config.get("max_features", 100),
             )
@@ -35,6 +38,7 @@ class FeaturesDatabase(ImageDatabase):
 
         self.paths = path
         self.annotation_db = annotation_db
+        print(annotation_db)
         self._should_return_info = config.get("return_features_info", True)
 
         if self._fast_read:
@@ -62,6 +66,7 @@ class FeaturesDatabase(ImageDatabase):
         features = []
         infos = []
         for feature_reader in self.feature_readers:
+
             feature, info = feature_reader.read(feat_file)
             # feature = torch.from_numpy(feature).share_memory_()
 
@@ -73,6 +78,7 @@ class FeaturesDatabase(ImageDatabase):
         return features, infos
 
     def _get_image_features_and_info(self, feat_file):
+        
         assert isinstance(feat_file, str)
         image_feats, infos = self.feature_dict.get(feat_file, (None, None))
 
@@ -93,7 +99,9 @@ class FeaturesDatabase(ImageDatabase):
     def get(self, item):
         feature_path = item.get(self.feature_key, None)
 
+
         if feature_path is None:
+            #feature_path=self.paths
             feature_path = self._get_feature_path_based_on_image(item)
 
         return self.from_path(feature_path)

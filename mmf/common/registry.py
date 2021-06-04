@@ -445,7 +445,6 @@ class Registry:
             if part not in current:
                 current[part] = {}
             current = current[part]
-
         current[path[-1]] = obj
 
     @classmethod

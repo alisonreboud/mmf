@@ -47,6 +47,7 @@ class FeatureReader:
             Description of returned object.
 
         """
+
         self.base_path = base_path
         ndim = None
         self.feat_reader = None
@@ -58,6 +59,7 @@ class FeatureReader:
         # Currently all lmdb features are with ndim == 2
         if self.base_path.endswith(".lmdb"):
             self.feat_reader = LMDBFeatureReader(self.max_features, self.base_path)
+            
         elif self.ndim == 2 or self.ndim == 0:
             if self.max_features is None:
                 self.feat_reader = FasterRCNNFeatureReader()
@@ -80,11 +82,16 @@ class FeatureReader:
             raise TypeError("unknown image feature format")
 
     def read(self, image_feat_path):
+
+        
         if not image_feat_path.endswith("npy") and not image_feat_path.endswith("pth"):
             return None
         image_feat_path = os.path.join(self.base_path, image_feat_path)
+        
 
         if self.feat_reader is None:
+
+            
             # Currently all lmdb features are with ndim == 2 so we are
             # avoiding loading the lmdb to determine feature ndim
             if not self.base_path.endswith(".lmdb") and self.ndim is None:
@@ -217,6 +224,8 @@ class LMDBFeatureReader(PaddedFasterRCNNFeatureReader):
         )
         with self.env.begin(write=False, buffers=True) as txn:
             self.image_ids = pickle.loads(txn.get(b"keys"))
+ 
+            
             self.image_id_indices = {
                 self.image_ids[i]: i for i in range(0, len(self.image_ids))
             }
@@ -224,11 +233,13 @@ class LMDBFeatureReader(PaddedFasterRCNNFeatureReader):
     def _load(self, image_file_path):
         if self.env is None:
             self._init_db()
+            
 
         split = os.path.relpath(image_file_path, self.db_path).split(".npy")[0]
 
+
         try:
-            image_id = int(split.split("_")[-1])
+            image_id = int(split.split("/")[-1])
             # Try fetching to see if it actually exists otherwise fall back to
             # default
             img_id_idx = self.image_id_indices[str(image_id).encode()]
@@ -239,6 +250,7 @@ class LMDBFeatureReader(PaddedFasterRCNNFeatureReader):
 
         with self.env.begin(write=False, buffers=True) as txn:
             image_info = pickle.loads(txn.get(self.image_ids[img_id_idx]))
+              
 
         return image_info
 

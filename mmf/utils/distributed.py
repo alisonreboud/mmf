@@ -42,7 +42,11 @@ def synchronize(message="sync-workers"):
 
 
 def is_xla():
-    return registry.get("is_xla", no_warning=True)
+
+    return not (not registry.get("is_xla", no_warning=True))
+
+
+    #return False
 
 
 def get_rank():
@@ -217,8 +221,9 @@ def byte_tensor_to_object(byte_tensor, max_size=MAX_SIZE_LIMIT):
 def infer_init_method(config):
     if config.distributed.init_method is not None:
         return
-
     registry.register("is_xla", config.training.get("device", "cuda") == "xla")
+
+    
 
     # support torch.distributed.launch
     if all(

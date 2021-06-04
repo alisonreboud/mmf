@@ -161,6 +161,7 @@ def setup_imports():
     model_folder = os.path.join(root_folder, "models")
     common_folder = os.path.join(root_folder, "common")
     modules_folder = os.path.join(root_folder, "modules")
+    print(modules_folder)
     model_pattern = os.path.join(model_folder, "**", "*.py")
     common_pattern = os.path.join(common_folder, "**", "*.py")
     modules_pattern = os.path.join(modules_folder, "**", "*.py")

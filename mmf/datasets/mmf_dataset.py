@@ -43,6 +43,7 @@ class MMFDataset(BaseDataset):
         annotation_path = self._get_path_based_on_index(
             self.config, "annotations", self._index
         )
+
         return self.annotation_database(self.config, annotation_path, self.dataset_type)
 
     def build_features_db(self):

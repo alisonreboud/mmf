@@ -23,15 +23,11 @@ class CSIDialogueBuilder(MMFDatasetBuilder):
 
     @classmethod
     def config_path(cls):
-        return "configs/datasets/csi/defaults.yaml"
+        return "configs/datasets/csi/dialogues.yaml"
 
     def load(self, config, dataset_type, *args, **kwargs):
         config = config
-        print('voili voulou')
-
         self.dataset = super().load(config, dataset_type, *args, **kwargs)
-        print(self.dataset)
-
         return self.dataset
         
     

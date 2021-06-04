@@ -4,6 +4,7 @@ model_config:
     num_labels: 2
     losses:
     - type: cross_entropy
+  
  
     
     
@@ -11,30 +12,33 @@ model_config:
 dataset_config:
   csi:
     fast_read: false
-    data_dir: ${env.data_dir}
-    data_folder: /data/csi_videos/
+    #data_dir: ${env.data_dir}
+    data_dir: /data/csi_videos/
+    #data_folder: /data/csi_videos/
     use_images: false
     use_features: true
     features:
       train:
-      #- features/features_6frames.lmdb
-      - csi/features_s1e20_av.lmdb
+      - features_csi_organisers.lmdb
+      #- features_csi_lmdb.lmdb
       val:
-      #- features/features_6frames.lmdb
-      - csi/features_s1e20_av.lmdb
+      - features_csi_organisers.lmdb
+      #- features_csi_lmdb.lmdb
+      
       test:
-      #- features/features_6frames.lmdb
-      - csi/features_s1e20_av.lmdb
+      - features_csi_organisers.lmdb
+      #- features_csi_lmdb.lmdb
+      
     annotations:
       train:
-      #- text/train_dialogue_gt.csv
-      - csi/dialogue.csv
+      - vilbert_text_files/dialogue_train_0.csv
+      #- csi/dialogue.csv
       val:
-      #- text/val_dialogue_gt.csv
-       - csi/dialogue.csv
+      - vilbert_text_files/dialogue_dev_0.csv
+      # - csi/dialogue.csv
       test:
-      #- text/test_dialogue_gt.csv
-       - csi/dialogue.csv
+      - vilbert_text_files/dialogue_test_0.csv
+      # - csi/dialogue.csv
       
 
     return_features_info: true
@@ -70,29 +74,37 @@ dataset_config:
 optimizer:
   type: adam_w
   params:
-    lr: 5e-5
+    lr: 1e-5
+    #lr: 0.001
     eps: 1e-8
 
 scheduler:
   type: warmup_linear
   params:
-    num_warmup_steps: 6
-    num_training_steps: 6
+    num_warmup_steps: 2000
+    num_training_steps: ${training.max_updates}
 
 evaluation:
-  metrics:
-  - f1
+  metrics: 
+  - accuracy
+  - binary_f1
+  predict: false
+ 
 
 training:
-  batch_size: 4
-  lr_scheduler: false
+  batch_size: 6
+  seed: 1
+  lr_scheduler: true
   # Don't forget to update schedule_attributes if you update this
-  max_updates: 6
+  max_updates: 3000
+  device: cuda
   find_unused_parameters: true
+  val_check_interval: 100
   #early_stop:
-    #criteria: vqa2/vqa_accuracy
+    #criteria: csi/binary_f1
     #minimize: false
 
 checkpoint:
+  max_to_keep: 3
   pretrained_state_mapping:
     model.bert: model.bert

@@ -1,5 +1,6 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
 import json
+import pandas as pd
 
 import numpy as np
 import torch
@@ -31,9 +32,21 @@ class AnnotationDatabase(torch.utils.data.Dataset):
             self._load_jsonl(path)
         elif path.endswith(".json"):
             self._load_json(path)
+        elif path.endswith(".csv"):
+            self._load_csv(path)
         else:
+            print(path)
             raise ValueError("Unknown file format for annotation db")
+  
 
+    def _load_csv(self, path):
+        db=pd.read_csv(path)
+        db=db.to_dict('index')
+        self.data = db
+       
+        
+        self.start_idx =0
+        
     def _load_jsonl(self, path):
         with PathManager.open(path, "r") as f:
             db = f.readlines()
@@ -82,7 +95,9 @@ class AnnotationDatabase(torch.utils.data.Dataset):
         return len(self.data) - self.start_idx
 
     def __getitem__(self, idx):
+        
         data = self.data[idx + self.start_idx]
+        
 
         # Hacks for older IMDBs
         if "answers" not in data:
