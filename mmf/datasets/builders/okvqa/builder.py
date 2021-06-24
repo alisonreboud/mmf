@@ -1,6 +1,7 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
 from mmf.common.registry import registry
 from mmf.datasets.builders.okvqa.dataset import OKVQADataset
+from mmf.datasets.builders.csi.dataset import CSIFeaturesDataset
 from mmf.datasets.mmf_dataset_builder import MMFDatasetBuilder
 
 

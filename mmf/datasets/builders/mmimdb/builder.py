@@ -6,6 +6,7 @@
 #
 
 from mmf.common.registry import registry
+
 from mmf.datasets.builders.mmimdb.dataset import (
     MMIMDbFeaturesDataset,
     MMIMDbImageDataset,

@@ -4,6 +4,7 @@ model_config:
     num_labels: 2
     losses:
     - type: cross_entropy
+
   
  
     
@@ -51,7 +52,7 @@ dataset_config:
             params:
               do_lower_case: true
           mask_probability: 0
-          max_seq_length: 128
+          max_seq_length: 512
       transformer_bbox_processor:
         type: transformer_bbox
         params:
@@ -92,7 +93,7 @@ evaluation:
  
 
 training:
-  batch_size: 6
+  batch_size: 2
   seed: 1
   lr_scheduler: true
   # Don't forget to update schedule_attributes if you update this
@@ -100,9 +101,9 @@ training:
   device: cuda
   find_unused_parameters: true
   val_check_interval: 100
-  #early_stop:
-    #criteria: csi/binary_f1
-    #minimize: false
+  early_stop:
+    criteria: csi/binary_f1
+    minimize: false
 
 checkpoint:
   max_to_keep: 3

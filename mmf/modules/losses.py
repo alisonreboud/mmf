@@ -37,6 +37,7 @@ from mmf.common.registry import registry
 from omegaconf import MISSING
 from torch import Tensor
 from torch.nn.utils.rnn import pack_padded_sequence
+import numpy as np
 
 
 @dataclass
@@ -276,7 +277,7 @@ class BinaryCrossEntropyLoss(nn.Module):
         """Calculates and returns the binary cross entropy.
 
         Args:
-            sample_list (SampleList): SampleList containing `targets` attribute.
+            sample_list (SampleList): SampleList containing `targets` attribute
             model_output (Dict): Model output containing `scores` attribute.
 
         Returns:
@@ -285,8 +286,11 @@ class BinaryCrossEntropyLoss(nn.Module):
         """
         scores = model_output["scores"]
         targets = sample_list["targets"]
+        print('HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE')
+        print(scores.shape)
+        print('THEEEEEEEEEEEEEEEEEEEEEREEEEEEEEEEEE')
 
-        loss = F.binary_cross_entropy(scores, targets, reduction="mean")
+        loss = F.binary_cross_entropy(scores, targets, reduction="mean")#,weight= torch.from_numpy(np.asarray([1.0, 3.0])))
 
         return loss * targets.size(1)
 
@@ -573,7 +577,9 @@ class M4CDecodingBCEWithMaskLoss(nn.Module):
 class CrossEntropyLoss(nn.Module):
     def __init__(self, **params):
         super().__init__()
-        self.loss_fn = nn.CrossEntropyLoss(**params)
+        #self.loss_fn = nn.CrossEntropyLoss(**params)
+        self.loss_fn = nn.CrossEntropyLoss(weight=torch.FloatTensor([1.0, 3.0]).cuda())
+        #self.loss_fn = nn.CrossEntropyLoss(weight=torch.FloatTensor([1.0, 4.0]).cuda())
 
     def forward(self, sample_list, model_output):
         return self.loss_fn(model_output["scores"], sample_list["targets"])

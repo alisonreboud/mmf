@@ -1,0 +1,986 @@
+/home/semantic/reboud/mmf/mmf/mmf/utils/../modules
+[32m2021-06-14T04:52:12 | mmf.utils.configuration: [0mOverriding option config to mmf/configs/datasets/csi/dialogues.yaml
+[32m2021-06-14T04:52:12 | mmf.utils.configuration: [0mOverriding option model to vilbert
+[32m2021-06-14T04:52:12 | mmf.utils.configuration: [0mOverriding option datasets to csi
+[32m2021-06-14T04:52:12 | mmf.utils.configuration: [0mOverriding option run_type to train_val_test
+[32m2021-06-14T04:52:12 | mmf.utils.configuration: [0mOverriding option checkpoint.resume_pretrained to False
+[32m2021-06-14T04:52:12 | mmf.utils.configuration: [0mOverriding option dataset_config.csi.annotations.train to /data/csi_videos/vilbert_text_files/nondialogue_train_8.csv
+[32m2021-06-14T04:52:12 | mmf.utils.configuration: [0mOverriding option dataset_config.csi.annotations.val to /data/csi_videos/vilbert_text_files/nondialogue_dev_8.csv
+[32m2021-06-14T04:52:12 | mmf.utils.configuration: [0mOverriding option dataset_config.csi.annotations.test to /data/csi_videos/vilbert_text_files/nondialogue_test_8.csv
+[32m2021-06-14T04:52:12 | mmf: [0mLogging to: ./save/train.log
+[32m2021-06-14T04:52:12 | mmf_cli.run: [0mNamespace(config_override=None, local_rank=None, opts=['config=mmf/configs/datasets/csi/dialogues.yaml', 'model=vilbert', 'dataset=csi', 'run_type=train_val_test', 'checkpoint.resume_pretrained=False', 'dataset_config.csi.annotations.train=/data/csi_videos/vilbert_text_files/nondialogue_train_8.csv', 'dataset_config.csi.annotations.val=/data/csi_videos/vilbert_text_files/nondialogue_dev_8.csv', 'dataset_config.csi.annotations.test=/data/csi_videos/vilbert_text_files/nondialogue_test_8.csv'])
+[32m2021-06-14T04:52:12 | mmf_cli.run: [0mTorch version: 1.8.1+cu102
+[32m2021-06-14T04:52:12 | mmf.utils.general: [0mCUDA Device 0 is: Tesla K80
+[32m2021-06-14T04:52:12 | mmf_cli.run: [0mUsing seed 1
+[32m2021-06-14T04:52:12 | mmf.trainers.mmf_trainer: [0mLoading datasets
+<mmf.datasets.databases.annotation_database.AnnotationDatabase object at 0x7f44caef2810>
+<mmf.datasets.databases.annotation_database.AnnotationDatabase object at 0x7f44cb3270d0>
+<mmf.datasets.databases.annotation_database.AnnotationDatabase object at 0x7f44c6c6cbd0>
+[32m2021-06-14T04:52:15 | mmf.datasets.multi_datamodule: [0mMultitasking disabled by default for single dataset training
+[32m2021-06-14T04:52:15 | mmf.datasets.multi_datamodule: [0mMultitasking disabled by default for single dataset training
+[32m2021-06-14T04:52:15 | mmf.datasets.multi_datamodule: [0mMultitasking disabled by default for single dataset training
+[32m2021-06-14T04:52:15 | mmf.trainers.mmf_trainer: [0mLoading model
+[32m2021-06-14T04:52:22 | mmf.trainers.mmf_trainer: [0mLoading optimizer
+[32m2021-06-14T04:52:22 | mmf.trainers.mmf_trainer: [0mLoading metrics
+[5m[31mWARNING[0m [32m2021-06-14T04:52:22 | py.warnings: [0m/home/semantic/.conda/envs/areboudpy37/lib/python3.7/site-packages/omegaconf/basecontainer.py:232: UserWarning: cfg.pretty() is deprecated and will be removed in a future version.
+Use OmegaConf.to_yaml(cfg)
+
+  category=UserWarning,
+
+[5m[31mWARNING[0m [32m2021-06-14T04:52:22 | py.warnings: [0m/home/semantic/.conda/envs/areboudpy37/lib/python3.7/site-packages/omegaconf/basecontainer.py:232: UserWarning: cfg.pretty() is deprecated and will be removed in a future version.
+Use OmegaConf.to_yaml(cfg)
+
+  category=UserWarning,
+
+[32m2021-06-14T04:52:22 | mmf.trainers.mmf_trainer: [0m===== Model =====
+[32m2021-06-14T04:52:22 | mmf.trainers.mmf_trainer: [0mViLBERT(
+  (model): ViLBERTForClassification(
+    (bert): ViLBERTBase(
+      (embeddings): BertEmbeddings(
+        (word_embeddings): Embedding(30522, 768, padding_idx=0)
+        (position_embeddings): Embedding(512, 768)
+        (token_type_embeddings): Embedding(2, 768)
+        (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (v_embeddings): BertImageFeatureEmbeddings(
+        (image_embeddings): Linear(in_features=2048, out_features=1024, bias=True)
+        (image_location_embeddings): Linear(in_features=5, out_features=1024, bias=True)
+        (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+        (dropout): Dropout(p=0.1, inplace=False)
+      )
+      (encoder): BertEncoder(
+        (layer): ModuleList(
+          (0): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (1): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (2): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (3): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (4): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (5): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (6): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (7): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (8): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (9): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (10): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (11): BertLayer(
+            (attention): BertAttention(
+              (self): BertSelfAttention(
+                (query): Linear(in_features=768, out_features=768, bias=True)
+                (key): Linear(in_features=768, out_features=768, bias=True)
+                (value): Linear(in_features=768, out_features=768, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertSelfOutput(
+                (dense): Linear(in_features=768, out_features=768, bias=True)
+                (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+        (v_layer): ModuleList(
+          (0): BertImageLayer(
+            (attention): BertImageAttention(
+              (self): BertImageSelfAttention(
+                (query): Linear(in_features=1024, out_features=1024, bias=True)
+                (key): Linear(in_features=1024, out_features=1024, bias=True)
+                (value): Linear(in_features=1024, out_features=1024, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertImageSelfOutput(
+                (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (1): BertImageLayer(
+            (attention): BertImageAttention(
+              (self): BertImageSelfAttention(
+                (query): Linear(in_features=1024, out_features=1024, bias=True)
+                (key): Linear(in_features=1024, out_features=1024, bias=True)
+                (value): Linear(in_features=1024, out_features=1024, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertImageSelfOutput(
+                (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (2): BertImageLayer(
+            (attention): BertImageAttention(
+              (self): BertImageSelfAttention(
+                (query): Linear(in_features=1024, out_features=1024, bias=True)
+                (key): Linear(in_features=1024, out_features=1024, bias=True)
+                (value): Linear(in_features=1024, out_features=1024, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertImageSelfOutput(
+                (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (3): BertImageLayer(
+            (attention): BertImageAttention(
+              (self): BertImageSelfAttention(
+                (query): Linear(in_features=1024, out_features=1024, bias=True)
+                (key): Linear(in_features=1024, out_features=1024, bias=True)
+                (value): Linear(in_features=1024, out_features=1024, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertImageSelfOutput(
+                (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (4): BertImageLayer(
+            (attention): BertImageAttention(
+              (self): BertImageSelfAttention(
+                (query): Linear(in_features=1024, out_features=1024, bias=True)
+                (key): Linear(in_features=1024, out_features=1024, bias=True)
+                (value): Linear(in_features=1024, out_features=1024, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertImageSelfOutput(
+                (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (5): BertImageLayer(
+            (attention): BertImageAttention(
+              (self): BertImageSelfAttention(
+                (query): Linear(in_features=1024, out_features=1024, bias=True)
+                (key): Linear(in_features=1024, out_features=1024, bias=True)
+                (value): Linear(in_features=1024, out_features=1024, bias=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+              (output): BertImageSelfOutput(
+                (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+                (dropout): Dropout(p=0.1, inplace=False)
+              )
+            )
+            (intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+        (c_layer): ModuleList(
+          (0): BertConnectionLayer(
+            (biattention): BertBiAttention(
+              (query1): Linear(in_features=1024, out_features=1024, bias=True)
+              (key1): Linear(in_features=1024, out_features=1024, bias=True)
+              (value1): Linear(in_features=1024, out_features=1024, bias=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (query2): Linear(in_features=768, out_features=1024, bias=True)
+              (key2): Linear(in_features=768, out_features=1024, bias=True)
+              (value2): Linear(in_features=768, out_features=1024, bias=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (biOutput): BertBiOutput(
+              (dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm1): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (q_dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (q_dropout1): Dropout(p=0.1, inplace=False)
+              (dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (LayerNorm2): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+              (q_dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (q_dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (v_intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (v_output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (t_intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (t_output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (1): BertConnectionLayer(
+            (biattention): BertBiAttention(
+              (query1): Linear(in_features=1024, out_features=1024, bias=True)
+              (key1): Linear(in_features=1024, out_features=1024, bias=True)
+              (value1): Linear(in_features=1024, out_features=1024, bias=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (query2): Linear(in_features=768, out_features=1024, bias=True)
+              (key2): Linear(in_features=768, out_features=1024, bias=True)
+              (value2): Linear(in_features=768, out_features=1024, bias=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (biOutput): BertBiOutput(
+              (dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm1): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (q_dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (q_dropout1): Dropout(p=0.1, inplace=False)
+              (dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (LayerNorm2): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+              (q_dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (q_dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (v_intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (v_output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (t_intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (t_output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (2): BertConnectionLayer(
+            (biattention): BertBiAttention(
+              (query1): Linear(in_features=1024, out_features=1024, bias=True)
+              (key1): Linear(in_features=1024, out_features=1024, bias=True)
+              (value1): Linear(in_features=1024, out_features=1024, bias=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (query2): Linear(in_features=768, out_features=1024, bias=True)
+              (key2): Linear(in_features=768, out_features=1024, bias=True)
+              (value2): Linear(in_features=768, out_features=1024, bias=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (biOutput): BertBiOutput(
+              (dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm1): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (q_dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (q_dropout1): Dropout(p=0.1, inplace=False)
+              (dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (LayerNorm2): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+              (q_dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (q_dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (v_intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (v_output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (t_intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (t_output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (3): BertConnectionLayer(
+            (biattention): BertBiAttention(
+              (query1): Linear(in_features=1024, out_features=1024, bias=True)
+              (key1): Linear(in_features=1024, out_features=1024, bias=True)
+              (value1): Linear(in_features=1024, out_features=1024, bias=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (query2): Linear(in_features=768, out_features=1024, bias=True)
+              (key2): Linear(in_features=768, out_features=1024, bias=True)
+              (value2): Linear(in_features=768, out_features=1024, bias=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (biOutput): BertBiOutput(
+              (dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm1): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (q_dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (q_dropout1): Dropout(p=0.1, inplace=False)
+              (dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (LayerNorm2): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+              (q_dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (q_dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (v_intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (v_output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (t_intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (t_output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (4): BertConnectionLayer(
+            (biattention): BertBiAttention(
+              (query1): Linear(in_features=1024, out_features=1024, bias=True)
+              (key1): Linear(in_features=1024, out_features=1024, bias=True)
+              (value1): Linear(in_features=1024, out_features=1024, bias=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (query2): Linear(in_features=768, out_features=1024, bias=True)
+              (key2): Linear(in_features=768, out_features=1024, bias=True)
+              (value2): Linear(in_features=768, out_features=1024, bias=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (biOutput): BertBiOutput(
+              (dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm1): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (q_dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (q_dropout1): Dropout(p=0.1, inplace=False)
+              (dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (LayerNorm2): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+              (q_dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (q_dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (v_intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (v_output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (t_intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (t_output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+          (5): BertConnectionLayer(
+            (biattention): BertBiAttention(
+              (query1): Linear(in_features=1024, out_features=1024, bias=True)
+              (key1): Linear(in_features=1024, out_features=1024, bias=True)
+              (value1): Linear(in_features=1024, out_features=1024, bias=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (query2): Linear(in_features=768, out_features=1024, bias=True)
+              (key2): Linear(in_features=768, out_features=1024, bias=True)
+              (value2): Linear(in_features=768, out_features=1024, bias=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (biOutput): BertBiOutput(
+              (dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm1): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout1): Dropout(p=0.1, inplace=False)
+              (q_dense1): Linear(in_features=1024, out_features=1024, bias=True)
+              (q_dropout1): Dropout(p=0.1, inplace=False)
+              (dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (LayerNorm2): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout2): Dropout(p=0.1, inplace=False)
+              (q_dense2): Linear(in_features=1024, out_features=768, bias=True)
+              (q_dropout2): Dropout(p=0.1, inplace=False)
+            )
+            (v_intermediate): BertImageIntermediate(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (v_output): BertImageOutput(
+              (dense): Linear(in_features=1024, out_features=1024, bias=True)
+              (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (t_intermediate): BertIntermediate(
+              (dense): Linear(in_features=768, out_features=3072, bias=True)
+            )
+            (t_output): BertOutput(
+              (dense): Linear(in_features=3072, out_features=768, bias=True)
+              (LayerNorm): LayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+          )
+        )
+      )
+      (t_pooler): BertTextPooler(
+        (dense): Linear(in_features=768, out_features=1024, bias=True)
+        (activation): ReLU()
+      )
+      (v_pooler): BertImagePooler(
+        (dense): Linear(in_features=1024, out_features=1024, bias=True)
+        (activation): ReLU()
+      )
+    )
+    (dropout): Dropout(p=0.1, inplace=False)
+    (classifier): Sequential(
+      (0): BertPredictionHeadTransform(
+        (dense): Linear(in_features=1024, out_features=1024, bias=True)
+        (LayerNorm): LayerNorm((1024,), eps=1e-12, elementwise_affine=True)
+      )
+      (1): Linear(in_features=1024, out_features=2, bias=True)
+    )
+  )
+  (losses): Losses(
+    (losses): ModuleList(
+      (0): MMFLoss(
+        (loss_criterion): CrossEntropyLoss(
+          (loss_fn): CrossEntropyLoss()
+        )
+      )
+    )
+  )
+)
+[32m2021-06-14T04:52:22 | mmf.utils.general: [0mTotal Parameters: 247780354. Trained Parameters: 247780354
+[32m2021-06-14T04:52:22 | mmf.trainers.core.training_loop: [0mStarting training...
+[32m2021-06-14T04:53:36 | mmf.trainers.callbacks.logistics: [0mprogress: 100/3000, train/csi/cross_entropy: 0.3694, train/csi/cross_entropy/avg: 0.3694, train/total_loss: 0.3694, train/total_loss/avg: 0.3694, max mem: 5043.0, experiment: run, epoch: 1, num_updates: 100, iterations: 100, max_updates: 3000, lr: 0., ups: 1.37, time: 01m 13s 509ms, time_since_start: 01m 13s 527ms, eta: 54m 21s 639ms
+[32m2021-06-14T04:53:36 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T04:53:36 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T04:53:48 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T04:53:52 | mmf.utils.checkpoint: [0mSaving best checkpoint
+[32m2021-06-14T04:54:11 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T04:54:24 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T04:54:24 | mmf.trainers.callbacks.logistics: [0mprogress: 100/3000, val/csi/cross_entropy: 0.5999, val/total_loss: 0.5999, val/csi/accuracy: 0.7138, val/csi/binary_f1: 0.0000, num_updates: 100, epoch: 1, iterations: 100, max_updates: 3000, val_time: 48s 691ms, best_update: 100, best_iteration: 100, best_val/csi/binary_f1: 0.000000
+[32m2021-06-14T04:55:38 | mmf.trainers.callbacks.logistics: [0mprogress: 200/3000, train/csi/cross_entropy: 0.3694, train/csi/cross_entropy/avg: 0.7382, train/total_loss: 0.3694, train/total_loss/avg: 0.7382, max mem: 5043.0, experiment: run, epoch: 2, num_updates: 200, iterations: 200, max_updates: 3000, lr: 0., ups: 1.37, time: 01m 13s 587ms, time_since_start: 03m 15s 808ms, eta: 52m 32s 495ms
+[32m2021-06-14T04:55:38 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T04:55:38 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T04:55:50 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T04:55:58 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T04:56:14 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T04:56:14 | mmf.trainers.callbacks.logistics: [0mprogress: 200/3000, val/csi/cross_entropy: 0.7001, val/total_loss: 0.7001, val/csi/accuracy: 0.7264, val/csi/binary_f1: 0.0000, num_updates: 200, epoch: 2, iterations: 200, max_updates: 3000, val_time: 36s 183ms, best_update: 100, best_iteration: 100, best_val/csi/binary_f1: 0.000000
+[32m2021-06-14T04:57:28 | mmf.trainers.callbacks.logistics: [0mprogress: 300/3000, train/csi/cross_entropy: 0.6985, train/csi/cross_entropy/avg: 0.7250, train/total_loss: 0.6985, train/total_loss/avg: 0.7250, max mem: 5043.0, experiment: run, epoch: 2, num_updates: 300, iterations: 300, max_updates: 3000, lr: 0., ups: 1.37, time: 01m 13s 695ms, time_since_start: 05m 05s 689ms, eta: 50m 44s 379ms
+[32m2021-06-14T04:57:28 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T04:57:28 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T04:57:40 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T04:57:44 | mmf.utils.checkpoint: [0mSaving best checkpoint
+[32m2021-06-14T04:57:56 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T04:58:11 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T04:58:11 | mmf.trainers.callbacks.logistics: [0mprogress: 300/3000, val/csi/cross_entropy: 0.5796, val/total_loss: 0.5796, val/csi/accuracy: 0.7264, val/csi/binary_f1: 0.0225, num_updates: 300, epoch: 2, iterations: 300, max_updates: 3000, val_time: 42s 933ms, best_update: 300, best_iteration: 300, best_val/csi/binary_f1: 0.022472
+[32m2021-06-14T04:59:25 | mmf.trainers.callbacks.logistics: [0mprogress: 400/3000, train/csi/cross_entropy: 0.6985, train/csi/cross_entropy/avg: 0.7808, train/total_loss: 0.6985, train/total_loss/avg: 0.7808, max mem: 5043.0, experiment: run, epoch: 3, num_updates: 400, iterations: 400, max_updates: 3000, lr: 0., ups: 1.35, time: 01m 14s 010ms, time_since_start: 07m 02s 635ms, eta: 49m 04s 154ms
+[32m2021-06-14T04:59:25 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T04:59:25 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T04:59:37 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T04:59:42 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:00:01 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:00:01 | mmf.trainers.callbacks.logistics: [0mprogress: 400/3000, val/csi/cross_entropy: 0.5836, val/total_loss: 0.5836, val/csi/accuracy: 0.7233, val/csi/binary_f1: 0.0222, num_updates: 400, epoch: 3, iterations: 400, max_updates: 3000, val_time: 36s 513ms, best_update: 300, best_iteration: 300, best_val/csi/binary_f1: 0.022472
+[32m2021-06-14T05:01:15 | mmf.trainers.callbacks.logistics: [0mprogress: 500/3000, train/csi/cross_entropy: 0.6985, train/csi/cross_entropy/avg: 0.7539, train/total_loss: 0.6985, train/total_loss/avg: 0.7539, max mem: 5043.0, experiment: run, epoch: 3, num_updates: 500, iterations: 500, max_updates: 3000, lr: 0., ups: 1.37, time: 01m 13s 657ms, time_since_start: 08m 52s 809ms, eta: 46m 57s 396ms
+[32m2021-06-14T05:01:15 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:01:15 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:01:27 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:01:35 | mmf.utils.checkpoint: [0mSaving best checkpoint
+[32m2021-06-14T05:01:51 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:02:08 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:02:08 | mmf.trainers.callbacks.logistics: [0mprogress: 500/3000, val/csi/cross_entropy: 0.6178, val/total_loss: 0.6178, val/csi/accuracy: 0.6887, val/csi/binary_f1: 0.2979, num_updates: 500, epoch: 3, iterations: 500, max_updates: 3000, val_time: 52s 820ms, best_update: 500, best_iteration: 500, best_val/csi/binary_f1: 0.297872
+[32m2021-06-14T05:03:21 | mmf.trainers.callbacks.logistics: [0mprogress: 600/3000, train/csi/cross_entropy: 0.6985, train/csi/cross_entropy/avg: 0.7543, train/total_loss: 0.6985, train/total_loss/avg: 0.7543, max mem: 5043.0, experiment: run, epoch: 4, num_updates: 600, iterations: 600, max_updates: 3000, lr: 0., ups: 1.37, time: 01m 13s 850ms, time_since_start: 10m 59s 482ms, eta: 45m 11s 790ms
+[32m2021-06-14T05:03:21 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:03:21 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:03:34 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:03:38 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:03:58 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:03:58 | mmf.trainers.callbacks.logistics: [0mprogress: 600/3000, val/csi/cross_entropy: 0.6683, val/total_loss: 0.6683, val/csi/accuracy: 0.7264, val/csi/binary_f1: 0.0000, num_updates: 600, epoch: 4, iterations: 600, max_updates: 3000, val_time: 36s 052ms, best_update: 500, best_iteration: 500, best_val/csi/binary_f1: 0.297872
+[32m2021-06-14T05:05:11 | mmf.trainers.callbacks.logistics: [0mprogress: 700/3000, train/csi/cross_entropy: 0.7568, train/csi/cross_entropy/avg: 0.7547, train/total_loss: 0.7568, train/total_loss/avg: 0.7547, max mem: 5043.0, experiment: run, epoch: 4, num_updates: 700, iterations: 700, max_updates: 3000, lr: 0., ups: 1.37, time: 01m 13s 627ms, time_since_start: 12m 49s 164ms, eta: 43m 10s 959ms
+[32m2021-06-14T05:05:11 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:05:11 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:05:23 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:05:27 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:05:41 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:05:41 | mmf.trainers.callbacks.logistics: [0mprogress: 700/3000, val/csi/cross_entropy: 0.5889, val/total_loss: 0.5889, val/csi/accuracy: 0.7107, val/csi/binary_f1: 0.0980, num_updates: 700, epoch: 4, iterations: 700, max_updates: 3000, val_time: 29s 943ms, best_update: 500, best_iteration: 500, best_val/csi/binary_f1: 0.297872
+[32m2021-06-14T05:06:55 | mmf.trainers.callbacks.logistics: [0mprogress: 800/3000, train/csi/cross_entropy: 0.6985, train/csi/cross_entropy/avg: 0.7223, train/total_loss: 0.6985, train/total_loss/avg: 0.7223, max mem: 5043.0, experiment: run, epoch: 5, num_updates: 800, iterations: 800, max_updates: 3000, lr: 0., ups: 1.37, time: 01m 13s 900ms, time_since_start: 14m 33s 010ms, eta: 41m 27s 481ms
+[32m2021-06-14T05:06:55 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:06:55 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:07:07 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:07:12 | mmf.utils.checkpoint: [0mSaving best checkpoint
+[32m2021-06-14T05:07:26 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:07:40 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:07:40 | mmf.trainers.callbacks.logistics: [0mprogress: 800/3000, val/csi/cross_entropy: 0.6580, val/total_loss: 0.6580, val/csi/accuracy: 0.5912, val/csi/binary_f1: 0.4196, num_updates: 800, epoch: 5, iterations: 800, max_updates: 3000, val_time: 44s 538ms, best_update: 800, best_iteration: 800, best_val/csi/binary_f1: 0.419643
+[32m2021-06-14T05:08:53 | mmf.trainers.callbacks.logistics: [0mprogress: 900/3000, train/csi/cross_entropy: 0.6985, train/csi/cross_entropy/avg: 0.7138, train/total_loss: 0.6985, train/total_loss/avg: 0.7138, max mem: 5043.0, experiment: run, epoch: 6, num_updates: 900, iterations: 900, max_updates: 3000, lr: 0., ups: 1.37, time: 01m 13s 809ms, time_since_start: 16m 31s 360ms, eta: 39m 31s 503ms
+[32m2021-06-14T05:08:53 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:08:53 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:09:05 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:09:10 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:09:24 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:09:24 | mmf.trainers.callbacks.logistics: [0mprogress: 900/3000, val/csi/cross_entropy: 0.5986, val/total_loss: 0.5986, val/csi/accuracy: 0.7170, val/csi/binary_f1: 0.2623, num_updates: 900, epoch: 6, iterations: 900, max_updates: 3000, val_time: 30s 849ms, best_update: 800, best_iteration: 800, best_val/csi/binary_f1: 0.419643
+[32m2021-06-14T05:10:38 | mmf.trainers.callbacks.checkpoint: [0mCheckpoint time. Saving a checkpoint.
+[32m2021-06-14T05:10:38 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:10:43 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:10:56 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:10:56 | mmf.trainers.callbacks.logistics: [0mprogress: 1000/3000, train/csi/cross_entropy: 0.6461, train/csi/cross_entropy/avg: 0.6910, train/total_loss: 0.6461, train/total_loss/avg: 0.6910, max mem: 5043.0, experiment: run, epoch: 6, num_updates: 1000, iterations: 1000, max_updates: 3000, lr: 0.00001, ups: 1.09, time: 01m 32s 265ms, time_since_start: 18m 34s 478ms, eta: 47m 03s 341ms
+[32m2021-06-14T05:10:56 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:10:56 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:11:09 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:11:21 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:11:34 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:11:34 | mmf.trainers.callbacks.logistics: [0mprogress: 1000/3000, val/csi/cross_entropy: 0.5727, val/total_loss: 0.5727, val/csi/accuracy: 0.7170, val/csi/binary_f1: 0.1964, num_updates: 1000, epoch: 6, iterations: 1000, max_updates: 3000, val_time: 38s 008ms, best_update: 800, best_iteration: 800, best_val/csi/binary_f1: 0.419643
+[32m2021-06-14T05:12:49 | mmf.trainers.callbacks.logistics: [0mprogress: 1100/3000, train/csi/cross_entropy: 0.6461, train/csi/cross_entropy/avg: 0.6830, train/total_loss: 0.6461, train/total_loss/avg: 0.6830, max mem: 5043.0, experiment: run, epoch: 7, num_updates: 1100, iterations: 1100, max_updates: 3000, lr: 0.00001, ups: 1.35, time: 01m 14s 133ms, time_since_start: 20m 26s 623ms, eta: 35m 55s 068ms
+[32m2021-06-14T05:12:49 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:12:49 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:13:01 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:13:06 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:13:25 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:13:25 | mmf.trainers.callbacks.logistics: [0mprogress: 1100/3000, val/csi/cross_entropy: 0.5924, val/total_loss: 0.5924, val/csi/accuracy: 0.7233, val/csi/binary_f1: 0.0000, num_updates: 1100, epoch: 7, iterations: 1100, max_updates: 3000, val_time: 36s 309ms, best_update: 800, best_iteration: 800, best_val/csi/binary_f1: 0.419643
+[32m2021-06-14T05:14:39 | mmf.trainers.callbacks.logistics: [0mprogress: 1200/3000, train/csi/cross_entropy: 0.6458, train/csi/cross_entropy/avg: 0.6600, train/total_loss: 0.6458, train/total_loss/avg: 0.6600, max mem: 5043.0, experiment: run, epoch: 7, num_updates: 1200, iterations: 1200, max_updates: 3000, lr: 0.00001, ups: 1.37, time: 01m 13s 611ms, time_since_start: 22m 16s 547ms, eta: 33m 47s 266ms
+[32m2021-06-14T05:14:39 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:14:39 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:14:51 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:14:59 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:15:16 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:15:16 | mmf.trainers.callbacks.logistics: [0mprogress: 1200/3000, val/csi/cross_entropy: 0.6067, val/total_loss: 0.6067, val/csi/accuracy: 0.6698, val/csi/binary_f1: 0.3312, num_updates: 1200, epoch: 7, iterations: 1200, max_updates: 3000, val_time: 37s 390ms, best_update: 800, best_iteration: 800, best_val/csi/binary_f1: 0.419643
+[32m2021-06-14T05:16:30 | mmf.trainers.callbacks.logistics: [0mprogress: 1300/3000, train/csi/cross_entropy: 0.6461, train/csi/cross_entropy/avg: 0.6632, train/total_loss: 0.6461, train/total_loss/avg: 0.6632, max mem: 5043.0, experiment: run, epoch: 8, num_updates: 1300, iterations: 1300, max_updates: 3000, lr: 0.00001, ups: 1.35, time: 01m 14s 016ms, time_since_start: 24m 07s 956ms, eta: 32m 05s 167ms
+[32m2021-06-14T05:16:30 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:16:30 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:16:42 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:16:46 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:17:05 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:17:05 | mmf.trainers.callbacks.logistics: [0mprogress: 1300/3000, val/csi/cross_entropy: 0.5708, val/total_loss: 0.5708, val/csi/accuracy: 0.7296, val/csi/binary_f1: 0.1400, num_updates: 1300, epoch: 8, iterations: 1300, max_updates: 3000, val_time: 35s 035ms, best_update: 800, best_iteration: 800, best_val/csi/binary_f1: 0.419643
+[32m2021-06-14T05:18:19 | mmf.trainers.callbacks.logistics: [0mprogress: 1400/3000, train/csi/cross_entropy: 0.6458, train/csi/cross_entropy/avg: 0.6472, train/total_loss: 0.6458, train/total_loss/avg: 0.6472, max mem: 5043.0, experiment: run, epoch: 8, num_updates: 1400, iterations: 1400, max_updates: 3000, lr: 0.00001, ups: 1.35, time: 01m 14s 048ms, time_since_start: 25m 57s 043ms, eta: 30m 12s 701ms
+[32m2021-06-14T05:18:19 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:18:19 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:18:31 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:18:35 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:18:50 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:18:50 | mmf.trainers.callbacks.logistics: [0mprogress: 1400/3000, val/csi/cross_entropy: 0.5813, val/total_loss: 0.5813, val/csi/accuracy: 0.7075, val/csi/binary_f1: 0.3404, num_updates: 1400, epoch: 8, iterations: 1400, max_updates: 3000, val_time: 31s 118ms, best_update: 800, best_iteration: 800, best_val/csi/binary_f1: 0.419643
+[32m2021-06-14T05:20:04 | mmf.trainers.callbacks.logistics: [0mprogress: 1500/3000, train/csi/cross_entropy: 0.6458, train/csi/cross_entropy/avg: 0.6359, train/total_loss: 0.6458, train/total_loss/avg: 0.6359, max mem: 5043.0, experiment: run, epoch: 9, num_updates: 1500, iterations: 1500, max_updates: 3000, lr: 0.00001, ups: 1.37, time: 01m 13s 924ms, time_since_start: 27m 42s 087ms, eta: 28m 16s 561ms
+[32m2021-06-14T05:20:04 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:20:04 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:20:16 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:20:21 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:20:41 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:20:41 | mmf.trainers.callbacks.logistics: [0mprogress: 1500/3000, val/csi/cross_entropy: 0.5936, val/total_loss: 0.5936, val/csi/accuracy: 0.6918, val/csi/binary_f1: 0.3797, num_updates: 1500, epoch: 9, iterations: 1500, max_updates: 3000, val_time: 36s 608ms, best_update: 800, best_iteration: 800, best_val/csi/binary_f1: 0.419643
+[32m2021-06-14T05:21:55 | mmf.trainers.callbacks.logistics: [0mprogress: 1600/3000, train/csi/cross_entropy: 0.6030, train/csi/cross_entropy/avg: 0.6120, train/total_loss: 0.6030, train/total_loss/avg: 0.6120, max mem: 5043.0, experiment: run, epoch: 10, num_updates: 1600, iterations: 1600, max_updates: 3000, lr: 0.00001, ups: 1.37, time: 01m 13s 933ms, time_since_start: 29m 32s 631ms, eta: 26m 23s 648ms
+[32m2021-06-14T05:21:55 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:21:55 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:22:07 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:22:12 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:22:31 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:22:31 | mmf.trainers.callbacks.logistics: [0mprogress: 1600/3000, val/csi/cross_entropy: 0.5983, val/total_loss: 0.5983, val/csi/accuracy: 0.7233, val/csi/binary_f1: 0.1852, num_updates: 1600, epoch: 10, iterations: 1600, max_updates: 3000, val_time: 35s 975ms, best_update: 800, best_iteration: 800, best_val/csi/binary_f1: 0.419643
+[32m2021-06-14T05:23:44 | mmf.trainers.callbacks.logistics: [0mprogress: 1700/3000, train/csi/cross_entropy: 0.6030, train/csi/cross_entropy/avg: 0.6001, train/total_loss: 0.6030, train/total_loss/avg: 0.6001, max mem: 5043.0, experiment: run, epoch: 10, num_updates: 1700, iterations: 1700, max_updates: 3000, lr: 0.00001, ups: 1.37, time: 01m 13s 602ms, time_since_start: 31m 22s 212ms, eta: 24m 23s 945ms
+[32m2021-06-14T05:23:44 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:23:44 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:23:56 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:24:01 | mmf.utils.checkpoint: [0mSaving best checkpoint
+[32m2021-06-14T05:24:18 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:24:31 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:24:31 | mmf.trainers.callbacks.logistics: [0mprogress: 1700/3000, val/csi/cross_entropy: 0.7548, val/total_loss: 0.7548, val/csi/accuracy: 0.5786, val/csi/binary_f1: 0.4370, num_updates: 1700, epoch: 10, iterations: 1700, max_updates: 3000, val_time: 47s 106ms, best_update: 1700, best_iteration: 1700, best_val/csi/binary_f1: 0.436975
+[32m2021-06-14T05:25:45 | mmf.trainers.callbacks.logistics: [0mprogress: 1800/3000, train/csi/cross_entropy: 0.6030, train/csi/cross_entropy/avg: 0.6302, train/total_loss: 0.6030, train/total_loss/avg: 0.6302, max mem: 5043.0, experiment: run, epoch: 11, num_updates: 1800, iterations: 1800, max_updates: 3000, lr: 0.00001, ups: 1.37, time: 01m 13s 989ms, time_since_start: 33m 23s 310ms, eta: 22m 38s 449ms
+[32m2021-06-14T05:25:45 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:25:45 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:25:57 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:26:02 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:26:17 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:26:17 | mmf.trainers.callbacks.logistics: [0mprogress: 1800/3000, val/csi/cross_entropy: 0.6337, val/total_loss: 0.6337, val/csi/accuracy: 0.7107, val/csi/binary_f1: 0.3947, num_updates: 1800, epoch: 11, iterations: 1800, max_updates: 3000, val_time: 31s 275ms, best_update: 1700, best_iteration: 1700, best_val/csi/binary_f1: 0.436975
+[32m2021-06-14T05:27:31 | mmf.trainers.callbacks.logistics: [0mprogress: 1900/3000, train/csi/cross_entropy: 0.6030, train/csi/cross_entropy/avg: 0.6035, train/total_loss: 0.6030, train/total_loss/avg: 0.6035, max mem: 5043.0, experiment: run, epoch: 11, num_updates: 1900, iterations: 1900, max_updates: 3000, lr: 0.00001, ups: 1.37, time: 01m 13s 975ms, time_since_start: 35m 08s 565ms, eta: 20m 45s 016ms
+[32m2021-06-14T05:27:31 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:27:31 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:27:43 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:27:47 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:28:02 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:28:02 | mmf.trainers.callbacks.logistics: [0mprogress: 1900/3000, val/csi/cross_entropy: 0.6829, val/total_loss: 0.6829, val/csi/accuracy: 0.6950, val/csi/binary_f1: 0.3576, num_updates: 1900, epoch: 11, iterations: 1900, max_updates: 3000, val_time: 31s 026ms, best_update: 1700, best_iteration: 1700, best_val/csi/binary_f1: 0.436975
+[32m2021-06-14T05:29:16 | mmf.trainers.callbacks.checkpoint: [0mCheckpoint time. Saving a checkpoint.
+[32m2021-06-14T05:29:16 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:29:20 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:29:34 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:29:34 | mmf.trainers.callbacks.logistics: [0mprogress: 2000/3000, train/csi/cross_entropy: 0.4948, train/csi/cross_entropy/avg: 0.5891, train/total_loss: 0.4948, train/total_loss/avg: 0.5891, max mem: 5043.0, experiment: run, epoch: 12, num_updates: 2000, iterations: 2000, max_updates: 3000, lr: 0.00001, ups: 1.09, time: 01m 32s 742ms, time_since_start: 37m 12s 337ms, eta: 23m 38s 968ms
+[32m2021-06-14T05:29:34 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:29:34 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:29:47 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:29:59 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:30:12 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:30:12 | mmf.trainers.callbacks.logistics: [0mprogress: 2000/3000, val/csi/cross_entropy: 0.9414, val/total_loss: 0.9414, val/csi/accuracy: 0.6069, val/csi/binary_f1: 0.4292, num_updates: 2000, epoch: 12, iterations: 2000, max_updates: 3000, val_time: 37s 775ms, best_update: 1700, best_iteration: 1700, best_val/csi/binary_f1: 0.436975
+[32m2021-06-14T05:31:26 | mmf.trainers.callbacks.logistics: [0mprogress: 2100/3000, train/csi/cross_entropy: 0.4948, train/csi/cross_entropy/avg: 0.5647, train/total_loss: 0.4948, train/total_loss/avg: 0.5647, max mem: 5043.0, experiment: run, epoch: 12, num_updates: 2100, iterations: 2100, max_updates: 3000, lr: 0.00001, ups: 1.37, time: 01m 13s 569ms, time_since_start: 39m 03s 685ms, eta: 16m 53s 046ms
+[32m2021-06-14T05:31:26 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:31:26 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:31:38 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:31:42 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:32:01 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:32:01 | mmf.trainers.callbacks.logistics: [0mprogress: 2100/3000, val/csi/cross_entropy: 0.9405, val/total_loss: 0.9405, val/csi/accuracy: 0.7075, val/csi/binary_f1: 0.3404, num_updates: 2100, epoch: 12, iterations: 2100, max_updates: 3000, val_time: 35s 283ms, best_update: 1700, best_iteration: 1700, best_val/csi/binary_f1: 0.436975
+[32m2021-06-14T05:33:15 | mmf.trainers.callbacks.logistics: [0mprogress: 2200/3000, train/csi/cross_entropy: 0.4858, train/csi/cross_entropy/avg: 0.5437, train/total_loss: 0.4858, train/total_loss/avg: 0.5437, max mem: 5043.0, experiment: run, epoch: 13, num_updates: 2200, iterations: 2200, max_updates: 3000, lr: 0.00001, ups: 1.35, time: 01m 14s 047ms, time_since_start: 40m 53s 019ms, eta: 15m 06s 345ms
+[32m2021-06-14T05:33:15 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:33:15 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:33:27 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:33:31 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:33:47 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:33:47 | mmf.trainers.callbacks.logistics: [0mprogress: 2200/3000, val/csi/cross_entropy: 1.0944, val/total_loss: 1.0944, val/csi/accuracy: 0.6792, val/csi/binary_f1: 0.3929, num_updates: 2200, epoch: 13, iterations: 2200, max_updates: 3000, val_time: 31s 538ms, best_update: 1700, best_iteration: 1700, best_val/csi/binary_f1: 0.436975
+[32m2021-06-14T05:35:00 | mmf.trainers.callbacks.logistics: [0mprogress: 2300/3000, train/csi/cross_entropy: 0.4771, train/csi/cross_entropy/avg: 0.5221, train/total_loss: 0.4771, train/total_loss/avg: 0.5221, max mem: 5043.0, experiment: run, epoch: 13, num_updates: 2300, iterations: 2300, max_updates: 3000, lr: 0.00001, ups: 1.37, time: 01m 13s 675ms, time_since_start: 42m 38s 235ms, eta: 13m 09s 066ms
+[32m2021-06-14T05:35:00 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:35:00 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:35:13 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:35:17 | mmf.utils.checkpoint: [0mSaving best checkpoint
+[32m2021-06-14T05:35:35 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:35:48 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:35:48 | mmf.trainers.callbacks.logistics: [0mprogress: 2300/3000, val/csi/cross_entropy: 1.2476, val/total_loss: 1.2476, val/csi/accuracy: 0.6509, val/csi/binary_f1: 0.4638, num_updates: 2300, epoch: 13, iterations: 2300, max_updates: 3000, val_time: 47s 365ms, best_update: 2300, best_iteration: 2300, best_val/csi/binary_f1: 0.463768
+[32m2021-06-14T05:37:01 | mmf.trainers.callbacks.logistics: [0mprogress: 2400/3000, train/csi/cross_entropy: 0.4403, train/csi/cross_entropy/avg: 0.5006, train/total_loss: 0.4403, train/total_loss/avg: 0.5006, max mem: 5043.0, experiment: run, epoch: 14, num_updates: 2400, iterations: 2400, max_updates: 3000, lr: 0.00001, ups: 1.37, time: 01m 13s 806ms, time_since_start: 44m 39s 409ms, eta: 11m 17s 545ms
+[32m2021-06-14T05:37:01 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:37:01 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:37:14 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:37:18 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:37:38 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:37:38 | mmf.trainers.callbacks.logistics: [0mprogress: 2400/3000, val/csi/cross_entropy: 1.2715, val/total_loss: 1.2715, val/csi/accuracy: 0.6792, val/csi/binary_f1: 0.3462, num_updates: 2400, epoch: 14, iterations: 2400, max_updates: 3000, val_time: 36s 330ms, best_update: 2300, best_iteration: 2300, best_val/csi/binary_f1: 0.463768
+[32m2021-06-14T05:38:52 | mmf.trainers.callbacks.logistics: [0mprogress: 2500/3000, train/csi/cross_entropy: 0.4103, train/csi/cross_entropy/avg: 0.4824, train/total_loss: 0.4103, train/total_loss/avg: 0.4824, max mem: 5043.0, experiment: run, epoch: 15, num_updates: 2500, iterations: 2500, max_updates: 3000, lr: 0.00001, ups: 1.37, time: 01m 13s 883ms, time_since_start: 46m 29s 626ms, eta: 09m 25s 205ms
+[32m2021-06-14T05:38:52 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:38:52 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:39:04 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:39:08 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:39:25 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:39:25 | mmf.trainers.callbacks.logistics: [0mprogress: 2500/3000, val/csi/cross_entropy: 1.2842, val/total_loss: 1.2842, val/csi/accuracy: 0.6824, val/csi/binary_f1: 0.4094, num_updates: 2500, epoch: 15, iterations: 2500, max_updates: 3000, val_time: 33s 467ms, best_update: 2300, best_iteration: 2300, best_val/csi/binary_f1: 0.463768
+[32m2021-06-14T05:40:39 | mmf.trainers.callbacks.logistics: [0mprogress: 2600/3000, train/csi/cross_entropy: 0.4077, train/csi/cross_entropy/avg: 0.4640, train/total_loss: 0.4077, train/total_loss/avg: 0.4640, max mem: 5043.0, experiment: run, epoch: 15, num_updates: 2600, iterations: 2600, max_updates: 3000, lr: 0., ups: 1.37, time: 01m 13s 824ms, time_since_start: 48m 16s 922ms, eta: 07m 31s 808ms
+[32m2021-06-14T05:40:39 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:40:39 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:40:51 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:40:55 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:41:15 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:41:15 | mmf.trainers.callbacks.logistics: [0mprogress: 2600/3000, val/csi/cross_entropy: 1.4256, val/total_loss: 1.4256, val/csi/accuracy: 0.6950, val/csi/binary_f1: 0.4121, num_updates: 2600, epoch: 15, iterations: 2600, max_updates: 3000, val_time: 35s 656ms, best_update: 2300, best_iteration: 2300, best_val/csi/binary_f1: 0.463768
+[32m2021-06-14T05:42:29 | mmf.trainers.callbacks.logistics: [0mprogress: 2700/3000, train/csi/cross_entropy: 0.3151, train/csi/cross_entropy/avg: 0.4469, train/total_loss: 0.3151, train/total_loss/avg: 0.4469, max mem: 5043.0, experiment: run, epoch: 16, num_updates: 2700, iterations: 2700, max_updates: 3000, lr: 0., ups: 1.35, time: 01m 14s 159ms, time_since_start: 50m 06s 741ms, eta: 05m 40s 393ms
+[32m2021-06-14T05:42:29 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:42:29 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:42:41 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:42:50 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:43:07 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:43:07 | mmf.trainers.callbacks.logistics: [0mprogress: 2700/3000, val/csi/cross_entropy: 1.4765, val/total_loss: 1.4765, val/csi/accuracy: 0.7013, val/csi/binary_f1: 0.3791, num_updates: 2700, epoch: 16, iterations: 2700, max_updates: 3000, val_time: 38s 242ms, best_update: 2300, best_iteration: 2300, best_val/csi/binary_f1: 0.463768
+[32m2021-06-14T05:44:21 | mmf.trainers.callbacks.logistics: [0mprogress: 2800/3000, train/csi/cross_entropy: 0.2537, train/csi/cross_entropy/avg: 0.4310, train/total_loss: 0.2537, train/total_loss/avg: 0.4310, max mem: 5043.0, experiment: run, epoch: 16, num_updates: 2800, iterations: 2800, max_updates: 3000, lr: 0., ups: 1.37, time: 01m 13s 655ms, time_since_start: 51m 58s 642ms, eta: 03m 45s 386ms
+[32m2021-06-14T05:44:21 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:44:21 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:44:33 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:44:38 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:44:56 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:44:56 | mmf.trainers.callbacks.logistics: [0mprogress: 2800/3000, val/csi/cross_entropy: 1.5293, val/total_loss: 1.5293, val/csi/accuracy: 0.6887, val/csi/binary_f1: 0.4142, num_updates: 2800, epoch: 16, iterations: 2800, max_updates: 3000, val_time: 35s 821ms, best_update: 2300, best_iteration: 2300, best_val/csi/binary_f1: 0.463768
+[32m2021-06-14T05:46:11 | mmf.trainers.callbacks.logistics: [0mprogress: 2900/3000, train/csi/cross_entropy: 0.1218, train/csi/cross_entropy/avg: 0.4162, train/total_loss: 0.1218, train/total_loss/avg: 0.4162, max mem: 5043.0, experiment: run, epoch: 17, num_updates: 2900, iterations: 2900, max_updates: 3000, lr: 0., ups: 1.35, time: 01m 14s 210ms, time_since_start: 53m 48s 676ms, eta: 01m 53s 541ms
+[32m2021-06-14T05:46:11 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:46:11 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:46:23 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:46:35 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:46:48 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:46:48 | mmf.trainers.callbacks.logistics: [0mprogress: 2900/3000, val/csi/cross_entropy: 1.5555, val/total_loss: 1.5555, val/csi/accuracy: 0.7013, val/csi/binary_f1: 0.3791, num_updates: 2900, epoch: 17, iterations: 2900, max_updates: 3000, val_time: 37s 272ms, best_update: 2300, best_iteration: 2300, best_val/csi/binary_f1: 0.463768
+[32m2021-06-14T05:48:02 | mmf.trainers.callbacks.checkpoint: [0mCheckpoint time. Saving a checkpoint.
+[32m2021-06-14T05:48:02 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:48:14 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:48:27 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:48:27 | mmf.trainers.callbacks.logistics: [0mprogress: 3000/3000, train/csi/cross_entropy: 0.1029, train/csi/cross_entropy/avg: 0.4025, train/total_loss: 0.1029, train/total_loss/avg: 0.4025, max mem: 5043.0, experiment: run, epoch: 17, num_updates: 3000, iterations: 3000, max_updates: 3000, lr: 0., ups: 1.01, time: 01m 39s 071ms, time_since_start: 56m 05s 023ms, eta: 0ms
+[32m2021-06-14T05:48:27 | mmf.trainers.core.training_loop: [0mEvaluation time. Running on full validation set...
+[32m2021-06-14T05:48:27 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:48:39 | mmf.utils.checkpoint: [0mCheckpoint save operation started!
+[32m2021-06-14T05:48:52 | mmf.utils.checkpoint: [0mSaving current checkpoint
+[32m2021-06-14T05:49:05 | mmf.utils.checkpoint: [0mCheckpoint save operation finished!
+[32m2021-06-14T05:49:05 | mmf.trainers.callbacks.logistics: [0mprogress: 3000/3000, val/csi/cross_entropy: 1.5621, val/total_loss: 1.5621, val/csi/accuracy: 0.6981, val/csi/binary_f1: 0.3846, num_updates: 3000, epoch: 17, iterations: 3000, max_updates: 3000, val_time: 37s 908ms, best_update: 2300, best_iteration: 2300, best_val/csi/binary_f1: 0.463768
+[32m2021-06-14T05:49:05 | mmf.trainers.core.training_loop: [0mStepping into final validation check
+[32m2021-06-14T05:49:05 | mmf.utils.checkpoint: [0mRestoring checkpoint
+[32m2021-06-14T05:49:05 | mmf.utils.checkpoint: [0mLoading checkpoint
+[32m2021-06-14T05:49:07 | mmf.utils.checkpoint: [0mCheckpoint loaded.
+[32m2021-06-14T05:49:07 | mmf.utils.checkpoint: [0mCurrent num updates: 2300
+[32m2021-06-14T05:49:07 | mmf.utils.checkpoint: [0mCurrent iteration: 2300
+[32m2021-06-14T05:49:07 | mmf.utils.checkpoint: [0mCurrent epoch: 13
+[32m2021-06-14T05:49:11 | mmf.trainers.mmf_trainer: [0mStarting inference on val set
+[32m2021-06-14T05:49:11 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:49:23 | mmf.trainers.callbacks.logistics: [0mprogress: 2300/3000, val/csi/cross_entropy: 1.2476, val/total_loss: 1.2476, val/csi/accuracy: 0.6509, val/csi/binary_f1: 0.4638
+[32m2021-06-14T05:49:23 | mmf.trainers.callbacks.logistics: [0mFinished run in 57m 875ms
+[32m2021-06-14T05:49:23 | mmf.trainers.mmf_trainer: [0mStarting inference on test set
+[32m2021-06-14T05:49:23 | mmf.common.test_reporter: [0mPredicting for csi
+[32m2021-06-14T05:49:29 | mmf.trainers.callbacks.logistics: [0mprogress: 2300/3000, test/csi/cross_entropy: 1.1144, test/total_loss: 1.1144, test/csi/accuracy: 0.6829, test/csi/binary_f1: 0.5000
+[32m2021-06-14T05:49:29 | mmf.trainers.callbacks.logistics: [0mFinished run in 57m 07s 209ms
