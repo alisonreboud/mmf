@@ -30,10 +30,23 @@ If you use MMF in your work or use any models published in MMF, please cite:
 ```
 
 ## Running the study
+We can start training by running the following command:
 
-``mmf_run config=mmf/configs/datasets/csi/dialogues.yaml    model=vilbert    dataset=csi    run_type=train_val_test checkpoint.resume_pretrained=True checkpoint.resume_zoo=vilbert.finetuned.mmimdb.direct dataset_config.csi.annotations.train=/data/csi_videos/vilbert_text_files/alltext_train_0.csv  dataset_config.csi.annotations.val=/data/csi_videos/vilbert_text_files/alltext_dev_0.csv  dataset_config.csi.annotations.test=/data/csi_videos/vilbert_text_files/alltext_test_0.csv   > alltext_imdb_10folds_terminal/fold0.txt``
+``mmf_run config=mmf/configs/datasets/csi/dialogues.yaml    model=vilbert    dataset=csi    run_type=train_val_test ``
 
- The script for each of the pretraining/mode/text input combinations is available as shell scripts in the [commands](/.commands)
+The hyperparameters for training and for the experiment are in the experiment config projects/m4c/configs/textvqa/defaults.yaml. We can also set config params using command line args:
+
+``mmf_run config=mmf/configs/datasets/csi/dialogues.yaml \
+    datasets=vilbert \
+    model=csi \
+    run_type=train_val_test \
+    training.batch_size=32 \
+    training.max_updates=44000 \
+    training.log_interval=10 \
+    training.checkpoint_interval=100 \
+    training.evaluation_interval=1000``
+
+The commands for each of the pretraining/mode/text input combinations is available as shell scripts in the [commands](/.commands)
  ![iccv](study_setting.jpg)
  
 ## Results
