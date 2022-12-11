@@ -12,7 +12,7 @@ The results computed in this repository were published in
 ![iccv](iccv.png)
 ## The study
 
- The script for each of the pretraining/mode/text input combinations is available as shell scripts in the [commands]  (/.commands)
+ The script for each of the pretraining/mode/text input combinations is available as shell scripts in the [commands](/.commands)
  ![iccv](study_setting.jpg)
 ## Results
 ![iccv](results_iccv.jpg)
