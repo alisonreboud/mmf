@@ -8,8 +8,12 @@ The results computed in this repository were published in
   year={2021}
 }
 ```
+## Why this study?
 ![iccv](iccv.png)
-
+## The study
+![iccv](study_setting.jpg)
+## Results
+![iccv](results_iccv.jpg)
 ## Installation
 
 Follow installation instructions in the [documentation](https://mmf.sh/docs/getting_started/installation).
