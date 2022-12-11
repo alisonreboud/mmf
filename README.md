@@ -8,6 +8,7 @@ The results computed in this repository were published in
   year={2021}
 }
 ```
+![iccv](iccv.png)
 
 ## Installation
 
