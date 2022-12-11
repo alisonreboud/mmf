@@ -1,38 +1,19 @@
-
-<div align="center">
-<img src="https://mmf.sh/img/logo.svg" width="50%"/>
-</div>
-
-#
-
-<div align="center">
-  <a href="https://mmf.sh/docs">
-  <img alt="Documentation Status" src="https://readthedocs.org/projects/mmf/badge/?version=latest"/>
-  </a>
-  <a href="https://circleci.com/gh/facebookresearch/mmf">
-  <img alt="CircleCI" src="https://circleci.com/gh/facebookresearch/mmf.svg?style=svg"/>
-  </a>
-</div>
-
----
-
-MMF is a modular framework for vision and language multimodal research from Facebook AI Research. MMF contains reference implementations of state-of-the-art vision and language models and has powered multiple research projects at Facebook AI Research. See full list of project inside or built on MMF [here](https://mmf.sh/docs/notes/projects).
-
-MMF is powered by PyTorch, allows distributed training and is un-opinionated, scalable and fast. Use MMF to **_bootstrap_** for your next vision and language multimodal research project by following the [installation instructions](https://mmf.sh/docs/getting_started/installation). Take a look at list of MMF features [here](https://mmf.sh/docs/getting_started/features).
-
-MMF also acts as **starter codebase** for challenges around vision and
-language datasets (The Hateful Memes, TextVQA, TextCaps and VQA challenges). MMF was formerly known as Pythia. The next video shows an overview of how datasets and models work inside MMF. Checkout MMF's [video overview](https://mmf.sh/docs/getting_started/video_overview).
-
+The results computed in this repository were published in 
+```bibtex
+@inproceedings{reboud2021you,
+  title={What You Say Is Not What You Do: Studying Visio-Linguistic Models for TV Series Summarization},
+  author={Reboud, Alison and Troncy, Rapha{\"e}l},
+  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
+  pages={3149--3153},
+  year={2021}
+}
+```
 
 ## Installation
 
 Follow installation instructions in the [documentation](https://mmf.sh/docs/getting_started/installation).
+This repo is based on MMF, a modular framework for vision and language multimodal research from Facebook AI Research. 
 
-## Documentation
-
-Learn more about MMF [here](https://mmf.sh/docs).
-
-## Citation
 
 If you use MMF in your work or use any models published in MMF, please cite:
 
@@ -45,6 +26,13 @@ If you use MMF in your work or use any models published in MMF, please cite:
   year =         {2020}
 }
 ```
+
+
+## Documentation
+
+Learn more about MMF [here](https://mmf.sh/docs).
+
+
 
 ## License
 
